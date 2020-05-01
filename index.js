@@ -51,7 +51,7 @@ function addResults(searchList, maxResults){
         console.log(itemToPrint);
         let info = detailedInfo(itemToPrint);
         let sampleVideo = getVideo(itemToPrint.yUrl);
-
+        
         $('#result-list').append(`<li><h4>${itemToPrint.Name}</h4>
             ${sampleVideo}
             ${info}
@@ -61,8 +61,13 @@ function addResults(searchList, maxResults){
 }
 
 function getVideo(videoUrl){
-    return `<iframe width="220px" height="220
+    if(videoUrl != null){
+        return `<iframe width="220px" height="220
     0px" src="${videoUrl}" allow="fullscreen"></iframe>`
+    } else{
+        return `<p></p>`
+    }
+    
 }
 
 function detailedInfo(details){
