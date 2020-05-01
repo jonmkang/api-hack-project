@@ -28,35 +28,41 @@ function searchByQuery(query, category, maxResults=10){
         url: fetchUrl,
         dataType: 'jsonp',
         success: (data) => {
-          printResults(data, maxResults);
+          printResults(data, maxResults, category);
         }
     })
 }
 
-function printResults(data, maxResults){
+function printResults(data, maxResults, category){
     let searchList = data.Similar.Results;
     $('#result-list').empty();
     $('#results').removeClass('hidden');
 
     if(searchList.length){
-        addResults(searchList, maxResults);
+        addResults(searchList, maxResults, category);
     }else{
         noResults();
     }
 }
 
-function addResults(searchList, maxResults){
+function addResults(searchList, maxResults, category){
     for(let i = 0; i < maxResults; i++){
         let itemToPrint = searchList[i];
         console.log(itemToPrint);
         let info = detailedInfo(itemToPrint);
         let sampleVideo = getVideo(itemToPrint.yUrl);
-        
-        $('#result-list').append(`<li><h4>${itemToPrint.Name}</h4>
+        console.log(category)
+        console.log(itemToPrint.Type)
+        if(itemToPrint.Type === category){
+            $('#result-list').append(`<li><h4>${itemToPrint.Name}</h4>
             ${sampleVideo}
             ${info}
             <button type="button" class="favorite">Favorite this!</button>
             </li>`);
+        }
+    }
+    if($('#result-list').children().length === 0){
+        noResults();
     }
 }
 
@@ -189,7 +195,7 @@ $(function shareFavorites(){
         event.preventDefault();
         let favToShare = listOfFavorites();
         copyToClipboard(favToShare);
-        console.log(favToShare);
+        alert('Copied favorites to clipboard!');
     })
 });
 
