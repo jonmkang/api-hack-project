@@ -1,0 +1,41 @@
+User Stories for API Hack:
+
+As a new user, I want to
+	
+	Start a search
+		Importance: High
+
+	Be able to change search-by categories (Music, Book, Movies)
+		Importance: High
+
+	Favorite results for the current session
+		Importance: Low
+
+	Search multiple items in each category
+		Importance: High
+
+	Search for new items multiple times
+		Importance: High
+
+	Rate recommended choices
+		Importance: Medium
+
+	
+As a returning user, I want to
+
+	See past searches
+		Importance: Low
+	
+	Review favorited results
+		Importance: Low
+
+As an administrator, I want to
+	
+	See most popular searches
+		Importance: Medium
+	
+	See most favorite results
+		Importance: Medium
+
+	See most popular genres
+		Importance: Low

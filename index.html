@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Get new Recommendations!</title>
+    <link rel="stylesheet" href="index.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="index.js"></script>
+</head>
+<body>
+    <nav>Jonathan's Entertainment API Hack
+        <div class="fav-recs">
+            <button type="button" class="favorite-recs">My Favorite Recs</button>
+            <ul id="favorites" class="favorites-content hidden">
+            
+
+            </ul>
+            <button type="button" class="share hidden">Share Favorites</button>
+        </div>
+    </nav>
+    <div id="search-container" class="container">
+        <h1>Search for Entertainment recommendations</h1>
+        <form>
+            <label for="category">Select your category </label>
+            <select name="category" id="category">Category
+                <option value="band">Band</option>
+                <option value="movie">Movie</option>
+                <option value="show">Show</option>
+                <option value="book">Book</option>
+                <option value="author">Author</option>
+                <option value="game">Game</option>
+            </select>
+            <input type="text" id="item-to-search" placeholder="Search something you like!">
+            <input type="submit" value="Search">
+        </form>
+        <section id="results" class="results hidden">
+          <ul id="result-list">
+
+          </ul>
+        </section>
+
+</body>
+</html>
