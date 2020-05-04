@@ -8,6 +8,15 @@ body {
     font-family: 'Roboto', sans-serif;
 }
 
+img{
+    margin: 10px auto;
+}
+
+h5{
+    margin: 0px;
+    line-height: 20px;
+}
+
 body h1{
     font-size: 18px;
 }

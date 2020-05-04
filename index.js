@@ -16,13 +16,9 @@ function searchByQuery(query, category, maxResults=10){
         q: joinedQuery,
         type: category,
         verbose: 1};
-    
-    console.log(params);
 
     const queryString = formatQueryParams(params);
     const fetchUrl = url + queryString;
-
-    console.log(fetchUrl);
     
     $.ajax({
         url: fetchUrl,
@@ -45,18 +41,18 @@ function printResults(data, maxResults, category){
     }
 }
 
-function addResults(searchList, maxResults, category){
+async function addResults(searchList, maxResults, category){
     for(let i = 0; i < maxResults; i++){
         let itemToPrint = searchList[i];
-        console.log(itemToPrint);
-        let info = detailedInfo(itemToPrint);
-        let sampleVideo = getVideo(itemToPrint.yUrl);
-        console.log(category)
-        console.log(itemToPrint.Type)
+        let detailsList = " "
+
         if(itemToPrint.Type === category){
+
+        
+            detailsList = detailsList.concat(await sortByType(itemToPrint));
+            detailsList = detailsList.concat(getVideo(itemToPrint.yUrl));
             $('#result-list').append(`<li><h4>${itemToPrint.Name}</h4>
-            ${sampleVideo}
-            ${info}
+            ${detailsList}
             <button type="button" class="favorite">Favorite this!</button>
             </li>`);
         }
@@ -66,17 +62,63 @@ function addResults(searchList, maxResults, category){
     }
 }
 
+function sortByType(item){
+    if(item.Type != "movie"){
+        return detailedInfo(item);
+    } else {
+        return movieInfo(item.Name);
+    }
+}
+
 function getVideo(videoUrl){
     if(videoUrl != null){
-        return `<iframe width="220px" height="220
-    0px" src="${videoUrl}" allow="fullscreen"></iframe>`
+        return `<iframe class="video hidden" width="220px" height="220
+    0px" src="${videoUrl}" allow="fullscreen"></iframe>
+    <button type="button" class="view-video">Show video</button>
+    <button type="button" class="hide-video hidden">Hide video</button>`
     } else{
         return `<p></p>`
     }
     
 }
 
+async function movieInfo(movieName){
+    const url = `http://www.omdbapi.com/?`;
+    const joinedQuery = movieName.split(" ").join("+");
+    const api_key = '36dccbe4'
+    const params = {
+        t: joinedQuery,
+        apikey: api_key        
+        };
+
+    const queryString = formatQueryParams(params);
+    const fetchUrl = url + queryString;
+
+
+    let details = await fetch(fetchUrl)
+        .then(response => {return response.json()})
+        .catch(err => console.log('Something went wrong'))
+
+    console.log(details);
+    let posterUrl = details.Poster;
+    let plot = details.Plot;
+    let rating = details.imdbRating;
+    let length = details.Runtime;
+
+    if(!plot){
+        return `<p class="details">This plot wasn't in the database.</p>`
+    }else {
+        return `<h5>${rating}/10<br>Length: ${length}</h5><img src="${posterUrl}" alt="${details.Title} Poster" height="300px" width="200px
+        ><p class="details">${plot}</p>`
+    }
+}
+
+async function getBook(bookName){
+    console.log(bookName)
+}
+
 function detailedInfo(details){
+    
     const shortDetails = details.wTeaser.slice(0,200);
     return `<p class="details hidden">${shortDetails}
     <span class="hidden">${details.wTeaser}</span> 
@@ -119,6 +161,24 @@ $(function hideDetails(){
     $('body').on("click", ".hide-details", function(event){
         event.preventDefault();
         $(this).prev('button').prev('p').toggleClass("hidden");
+        $(this).toggleClass("hidden");
+        $(this).prev('button').toggleClass("hidden");
+    });
+})
+
+$(function viewVideo(){
+    $('body').on("click", ".view-video", function(event){
+        event.preventDefault();
+        $(this).prev('iframe').toggleClass("hidden");
+        $(this).toggleClass("hidden");
+        $(this).next('button').toggleClass("hidden");
+    });
+})
+
+$(function hideVideo(){
+    $('body').on("click", ".hide-video", function(event){
+        event.preventDefault();
+        $(this).prev('button').prev('iframe').toggleClass("hidden");
         $(this).toggleClass("hidden");
         $(this).prev('button').toggleClass("hidden");
     });
