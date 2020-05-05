@@ -63,7 +63,7 @@ async function addResults(searchList, maxResults, category){
 }
 
 function sortByType(item){
-    if(item.Type != "movie"){
+    if(item.Type === "music"){
         return detailedInfo(item);
     } else {
         return movieInfo(item.Name);
@@ -83,7 +83,7 @@ function getVideo(videoUrl){
 }
 
 async function movieInfo(movieName){
-    const url = `http://www.omdbapi.com/?`;
+    const url = `https://www.omdbapi.com/?`;
     const joinedQuery = movieName.split(" ").join("+");
     const api_key = '36dccbe4'
     const params = {
