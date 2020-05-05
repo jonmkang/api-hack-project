@@ -94,8 +94,9 @@ async function movieInfo(movieName){
     const queryString = formatQueryParams(params);
     const fetchUrl = url + queryString;
 
+   
 
-    let details = await fetch(fetchUrl)
+    let details = await fetch(fetchUrl, )
         .then(response => {return response.json()})
         .catch(err => console.log('Something went wrong'))
 
