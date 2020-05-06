@@ -176,7 +176,9 @@ $(function hideVideo(){
 })
 
 function noResults(){
-   window.alert(`Returned zero results\nIs your search spelled correctly?\nAre you searching in the correct category?`)
+   $('#result-list').append(`<p class="no-results">There were no results returned from this search.<br>
+   Is it spelled correctly?<br>
+   Is it in the right category?</p>`)
 }
 
 function displayResults(responseJson, maxResults){

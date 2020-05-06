@@ -161,7 +161,7 @@ label{
 
 input{
     font-weight: normal;
-    margin: 5px;
+    margin-top: 15px;
 }
 
 p{
@@ -191,6 +191,12 @@ button:hover, input {
     color: blue;
     text-decoration: underline;
     background-color: #D8C3A5;
+}
+
+.no-results{
+    color: black;
+    font-size: 14px;
+    line-height: 34px;
 }
 
 @media screen and (min-width: 540px){
