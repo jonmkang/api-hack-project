@@ -123,13 +123,18 @@ async function movieInfo(movieName){
 
 function detailedInfo(details){
     
-    const shortDetails = details.wTeaser.slice(0,200);
-    return `<p class="details hidden">${shortDetails}
-    <span class="hidden">${details.wTeaser}</span> 
-    <button type="button" class="all-details">See more</button>
-    <button type="button" class="hide-all hidden">Hide details</button></p>
-    <button type="button" class="show-details">Show details</button>
-    <button type="button" class="hide-details hidden">Hide details</button>`
+    const shortDetails = details.wTeaser.slice(0,300);
+    if(shortDetails){
+        return `<p class="details">${shortDetails}
+        <span class="hidden">${details.wTeaser}</span> 
+        <button type="button" class="all-details">See more</button>
+        <button type="button" class="hide-all hidden">Hide details</button></p>`
+    }else{
+        return `<p>No information found in the database.</p>`
+    }
+    
+    // <button type="button" class="show-details">Show details</button>
+    // <button type="button" class="hide-details hidden">Hide details</button>`
 }
 
 $(function showAllDetails(){
@@ -151,24 +156,6 @@ $(function hideAllDetails(){
         $(this).prev('button').toggleClass("hidden");
     });
 });
-
-$(function showDetails(){
-    $('body').on("click", ".show-details", function(event){
-        event.preventDefault();
-        $(this).prev('p').toggleClass("hidden");
-        $(this).toggleClass("hidden");
-        $(this).next('button').toggleClass("hidden");
-    });
-})
-
-$(function hideDetails(){
-    $('body').on("click", ".hide-details", function(event){
-        event.preventDefault();
-        $(this).prev('button').prev('p').toggleClass("hidden");
-        $(this).toggleClass("hidden");
-        $(this).prev('button').toggleClass("hidden");
-    });
-})
 
 $(function viewVideo(){
     $('body').on("click", ".view-video", function(event){

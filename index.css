@@ -5,7 +5,6 @@
   
 body {
     margin: 0;
-    padding: 10px;
     text-align: center;
     font-family: 'Noto Sans JP', sans-serif;
     display: flex;
@@ -281,11 +280,35 @@ button:hover, input {
 }
 
 @media screen and (min-width: 1200px){
+    
+
+    .container h1{
+        font-size: 60px;
+    }
+
+    .container h2{
+        font-size: 30px;
+    }
+
+    form{
+        font-size: 20px;
+    }
+
+    input{
+        font-size: 20px;
+    }
+
     ul{
         justify-content: space-evenly;
     }
+
     li{
         margin: 20px;
         width: 20%;
     }
+
+    li h4{
+        font-size: 28px;
+    }
+
 }
