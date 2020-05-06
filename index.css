@@ -242,7 +242,8 @@ button:hover, input {
         margin: 10px;
     }
 
-    p{
+    p{  
+        margin: 0 auto;
         font-size: 18px;
         line-height: 22px;
     }
