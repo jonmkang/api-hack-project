@@ -6,11 +6,14 @@
     <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
     <title>Get new Recommendations!</title>
     <link rel="stylesheet" href="index.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Varela+Round" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="index.js"></script>
 </head>
 <body>
-    <nav>Jonathan's Entertainment API Hack
+    <nav>
+        <h1>Jonathan's Entertainment Hack</h1>
         <div class="fav-recs">
             <button type="button" class="favorite-recs">My Favorite Recs</button>
             <ul id="favorites" class="favorites-content hidden">
@@ -22,22 +25,23 @@
     </nav>
     <div id="search-container" class="container">
         <h1>Broaden your horizons!</h1>
-        <h2>Find new music, new shows and movies to binge watch</h2>
+        <h2>Find new music, new shows, and movies to binge watch</h2>
         <form>
             <label for="category">Select your category </label>
             <select name="category" id="category">Category
                 <option value="music">Band</option>
                 <option value="movie">Movie</option>
                 <option value="show">Show</option>
-            </select>
-            <input type="text" id="item-to-search" placeholder="Search something you like!" required>
-            <input type="submit" value="Search">
+            </select><br>
+            <input type="text" id="item-to-search" placeholder="ACDC, Finding Nemo, etc" required>
+            <input id="search" type="submit" value="Search">
         </form>
         <section id="results" class="results hidden">
           <ul id="result-list">
 
           </ul>
         </section>
-
+    </div>    
+    <footer>Created by Jonathan Kang 2020</footer>
 </body>
 </html>

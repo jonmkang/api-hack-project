@@ -4,8 +4,64 @@
   }
   
 body {
+    margin: 0;
+    padding: 10px;
     text-align: center;
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Noto Sans JP', sans-serif;
+    display: flex;
+    flex-direction: column;
+    background-image: linear-gradient(to bottom, #EAE7DC, #D8C3A5, #E98074);
+    background-repeat: no-repeat;
+    background-size: auto;
+}
+
+footer{
+    padding: 10px;
+    background-color: white;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+}
+
+nav{
+    margin: 0;
+    padding: 10px;
+    background-color: #EAE7DC;
+    color: #E85A4F;
+    position: top;
+    top: 0;
+    flex-direction: row;
+}
+
+select{
+    font-size: 14px;
+}
+
+.favorites-content li {
+    background-color: white;
+    color: black;
+}
+
+.favorites-content li h4{
+    font-size: 22px;
+    margin: 10px;
+}
+
+.favorite-recs{
+    margin: 5px;
+    padding: 10px;
+    background-color: #D8C3A5;
+    color: black;
+    font-size: 14px;
+    font-weight: bolder;
+    border-radius: 12px;
+    border: none;
+}
+
+nav h1{
+    padding: 0;
+    margin: 10px;
+    font-size: 18px;
 }
 
 img{
@@ -17,10 +73,6 @@ h5{
     line-height: 20px;
 }
 
-body h1{
-    font-size: 18px;
-}
-
 h2{
     font-size: 14px;
 }
@@ -29,13 +81,33 @@ input{
     margin-top: 10px;
 }
 
+#search:hover{
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
 .container {
+    margin-top: 2rem;
+    min-height: 100vh;
+    color: #E85A4F;
     width: 100%;
-    margin: 0;
 }
   
 .hidden {
     display: none;
+} 
+
+.container h1{
+    font-size: 28px;
+    margin: .5rem auto;
+    width: 75%;
+    padding: .5rem;
+    border-radius: 1rem;
+    color: BLack;
+    font-weight: bolder;
+}
+
+form{
+    color: black;
 }
 
 ul{
@@ -45,22 +117,51 @@ ul{
 }
 
 li{
-    margin: 20px;
+    font-family: "Varela Round";
+    background-color: #D8C3A5;
+    color: black;
+    margin: 20px auto;
     list-style-type: none;
-    width: 90%;
-    border: 1pt black solid;
-    margin: 10px auto;
-    text-align: center;
+    width: 80%;
+    border: 3pt #E98074 inset;
+    text-align: left;
     display: flex;
     flex-direction: column;
     padding: 16px;
 }
 
-iframe{
-    margin: 0 auto;
+li p{
+    padding: 1rem;
 }
 
-button{
+li h4{
+    text-align: center;
+}
+
+iframe{
+    margin: 5px auto;
+    border: 4pt inset #E85A4F;
+}
+
+button, input{
+    font-family: "Varela Round";
+    font-weight: bold;
+    margin: 5px auto;
+    padding: 8px;
+    font-size: 16px;
+    border-radius: 10px;
+    border: none;
+    transition: all 0.4s ease 0s;
+    text-decoration: none;
+    text-transform: uppercase;
+}
+
+label{
+    font-weight: bold;
+}
+
+input{
+    font-weight: normal;
     margin: 5px;
 }
 
@@ -68,12 +169,19 @@ p{
     font-size: 12px;
 }
 
+button:hover, input {
+    text-shadow: 0px 0px 6px rgba(255, 255, 255, 1);
+    -webkit-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
+    -moz-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
+    transition: all 0.4s ease 0s;
+}
+
 .all-details{
     border: none;
     padding: 0;
-    background-color: white;
     color: blue;
     text-decoration: underline;
+    background-color: #D8C3A5;
 }
 
 .hide-all{
@@ -81,22 +189,61 @@ p{
     padding: 0;
     background-color: white;
     font-style: italic;
+    color: blue;
+    text-decoration: underline;
+    background-color: #D8C3A5;
 }
 
 @media screen and (min-width: 540px){
+    nav h1{
+        position: absolute;
+        left: 0;
+        font-size: 18px;
+    }
+
+    .container h1{
+        font-weight: bolder;
+        font-size: 32px;
+    }
+
+    .container h2{
+        font-size: 18px;
+    }
+
+    .favorite-recs{
+        position: absolute;
+        right: 0;
+        font-size: 18px;
+    }
+
     li{
         margin: 20px auto;
         padding: 10px;
         width: 75%;
     }
 
-    p{
+    select{
+        margin: 5px;
+        padding: 5px;
+        border: none;
         font-size: 16px;
+        box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
+        -webkit-appearance: button;
+        appearance: button;
+        outline: none;
+    }
+
+    input{
+        margin: 10px;
+    }
+
+    p{
+        font-size: 18px;
         line-height: 22px;
     }
 
     h4{
-        font-size: 20px;
+        font-size: 28px;
     }
 
     button{
@@ -130,5 +277,15 @@ p{
 
     button{
         font-size: 14px;
+    }
+}
+
+@media screen and (min-width: 1200px){
+    ul{
+        justify-content: space-evenly;
+    }
+    li{
+        margin: 20px;
+        width: 20%;
     }
 }

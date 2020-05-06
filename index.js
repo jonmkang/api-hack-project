@@ -1,7 +1,5 @@
 'use strict'
 
-
-
 function formatQueryParams(params) {
     const queryItems = Object.keys(params).map(key => `${key}=${params[key]}`)
     return queryItems.join('&');
@@ -50,7 +48,7 @@ async function addResults(searchList, maxResults, category){
 
         
             detailsList = detailsList.concat(await sortByType(itemToPrint));
-            detailsList = detailsList.concat(getVideo(itemToPrint.yUrl));
+            detailsList = detailsList.concat(getVideo(itemToPrint));
             $('#result-list').append(`<li><h4>${itemToPrint.Name}</h4>
             ${detailsList}
             <button type="button" class="favorite">Favorite this!</button>
@@ -71,10 +69,18 @@ function sortByType(item){
 }
 
 function getVideo(videoUrl){
-    if(videoUrl != null){
+    console.log(videoUrl);
+    if(videoUrl.yUrl != null){
+        let type = videoUrl.Type;
+        let typesOfVideo = {
+            movie: "Trailer",
+            music: "Sample",
+            show: "Trailer"
+        }
+        console.log(typesOfVideo[type])
         return `<iframe class="video hidden" width="220px" height="220
-    0px" src="${videoUrl}" allow="fullscreen"></iframe>
-    <button type="button" class="view-video">Show video</button>
+    0px" src="${videoUrl.yUrl}" allow="fullscreen"></iframe>
+    <button type="button" class="view-video">Show ${typesOfVideo[type]}</button>
     <button type="button" class="hide-video hidden">Hide video</button>`
     } else{
         return `<p></p>`
@@ -100,22 +106,19 @@ async function movieInfo(movieName){
         .then(response => {return response.json()})
         .catch(err => console.log('Something went wrong'))
 
-    console.log(details);
+    // console.log(details);
     let posterUrl = details.Poster;
     let plot = details.Plot;
     let rating = details.imdbRating;
     let length = details.Runtime;
 
     if(!plot){
-        return `<p class="details">This plot wasn't in the database.</p>`
+        return `<img src="https://i.pinimg.com/236x/cc/32/69/cc32690c49d90effb38d8eaf96c03ad1.jpg" height="300px" width="200px"
+        ><p class="details">This plot wasn't in the database.</p>` 
     }else {
-        return `<h5>${rating}/10<br>Length: ${length}</h5><img src="${posterUrl}" alt="${details.Title} Poster" height="300px" width="200px
+        return `<h5>Rating out of 10: ${rating}<br>Length: ${length}</h5><img src="${posterUrl}" alt="${details.Title} Poster" height="300px" width="200px"
         ><p class="details">${plot}</p>`
     }
-}
-
-async function getBook(bookName){
-    console.log(bookName)
 }
 
 function detailedInfo(details){
