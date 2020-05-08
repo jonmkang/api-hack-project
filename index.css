@@ -29,16 +29,10 @@ nav{
     color: #E85A4F;
     position: top;
     top: 0;
-    flex-direction: row;
 }
 
 select{
     font-size: 14px;
-}
-
-.favorites-content li {
-    background-color: white;
-    color: black;
 }
 
 .favorites-content li h4{
@@ -58,7 +52,6 @@ select{
 }
 
 nav h1{
-    padding: 0;
     margin: 10px;
     font-size: 18px;
 }
@@ -131,6 +124,7 @@ li{
 
 li p{
     padding: 1rem;
+    font-size: 14px;
 }
 
 li h4{
@@ -140,6 +134,8 @@ li h4{
 iframe{
     margin: 5px auto;
     border: 4pt inset #E85A4F;
+    height: 220px;
+    width: 220px;
 }
 
 button, input{
@@ -153,10 +149,6 @@ button, input{
     transition: all 0.4s ease 0s;
     text-decoration: none;
     text-transform: uppercase;
-}
-
-label{
-    font-weight: bold;
 }
 
 input{
@@ -221,6 +213,10 @@ button:hover, input {
         font-size: 18px;
     }
 
+   .favorites-content{
+       padding-top: 2.5rem;
+   }
+
     li{
         margin: 20px auto;
         padding: 10px;
@@ -244,7 +240,7 @@ button:hover, input {
 
     p{  
         margin: 0 auto;
-        font-size: 18px;
+        font-size: 20px;
         line-height: 22px;
     }
 

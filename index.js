@@ -1,10 +1,12 @@
 'use strict'
 
+//This function formats the paramters into a query format
 function formatQueryParams(params) {
     const queryItems = Object.keys(params).map(key => `${key}=${params[key]}`)
     return queryItems.join('&');
 }
 
+//This function prepares the ajax request based on search value
 function searchByQuery(query, category, maxResults=10){
     const url = `https://tastedive.com/api/similar?`;
     const joinedQuery = query.split(" ").join("+");
@@ -27,10 +29,11 @@ function searchByQuery(query, category, maxResults=10){
     })
 }
 
+//This function prepares the list, removing old results
 function printResults(data, maxResults, category){
     let searchList = data.Similar.Results;
+
     $('#result-list').empty();
-    $('#results').removeClass('hidden');
 
     if(searchList.length){
         addResults(searchList, maxResults, category);
@@ -39,6 +42,9 @@ function printResults(data, maxResults, category){
     }
 }
 
+//This function takes the response, extracts information from the objects,
+//and appends each result object to an unordered list.
+//If no results are found, it calls noResults.
 async function addResults(searchList, maxResults, category){
     for(let i = 0; i < maxResults; i++){
         let itemToPrint = searchList[i];
@@ -60,6 +66,7 @@ async function addResults(searchList, maxResults, category){
     }
 }
 
+//This function sorts the result object by type to extract different information based on object type
 function sortByType(item){
     if(item.Type === "music"){
         return detailedInfo(item);
@@ -68,8 +75,10 @@ function sortByType(item){
     }
 }
 
+//This function gets a video sample. 
+//It changes the "sample" based off the type, if it's movie/tv show or music.
 function getVideo(videoUrl){
-    console.log(videoUrl);
+
     if(videoUrl.yUrl != null){
         let type = videoUrl.Type;
         let typesOfVideo = {
@@ -77,17 +86,15 @@ function getVideo(videoUrl){
             music: "Sample",
             show: "Trailer"
         }
-        console.log(typesOfVideo[type])
-        return `<iframe class="video hidden" width="220px" height="220
-    0px" src="${videoUrl.yUrl}" allow="fullscreen"></iframe>
-    <button type="button" class="view-video">Show ${typesOfVideo[type]}</button>
-    <button type="button" class="hide-video hidden">Hide video</button>`
+
+        return `<iframe class="video hidden" src="${videoUrl.yUrl}" allow="fullscreen"></iframe><button type="button" class="view-video">Show ${typesOfVideo[type]}</button><button type="button" class="hide-video hidden">Hide video</button>`
     } else{
         return `<p></p>`
     }
     
 }
 
+//This function creates a fetch request for movies and tv shows details
 async function movieInfo(movieName){
     const url = `https://www.omdbapi.com/?`;
     const joinedQuery = movieName.split(" ").join("+");
@@ -106,37 +113,30 @@ async function movieInfo(movieName){
         .then(response => {return response.json()})
         .catch(err => console.log('Something went wrong'))
 
-    // console.log(details);
     let posterUrl = details.Poster;
     let plot = details.Plot;
     let rating = details.imdbRating;
     let length = details.Runtime;
 
     if(!plot){
-        return `<img src="https://i.pinimg.com/236x/cc/32/69/cc32690c49d90effb38d8eaf96c03ad1.jpg" height="300px" width="200px"
-        ><p class="details">This plot wasn't in the database.</p>` 
+        return `<img src="https://i.pinimg.com/236x/cc/32/69/cc32690c49d90effb38d8eaf96c03ad1.jpg" height="300px" width="200px"><p class="details">This plot wasn't in the database.</p>` 
     }else {
-        return `<h5>Rating out of 10: ${rating}<br>Length: ${length}</h5><img src="${posterUrl}" alt="${details.Title} Poster" height="300px" width="200px"
-        ><p class="details">${plot}</p>`
+        return `<h5>Rating out of 10: ${rating}<br>Length: ${length}</h5><img src="${posterUrl}" alt="${details.Title} Poster" height="300px" width="200px"><p class="details">${plot}</p>`
     }
 }
 
+//This function extracts wikipedia data for music
 function detailedInfo(details){
-    
     const shortDetails = details.wTeaser.slice(0,300);
+
     if(shortDetails){
-        return `<p class="details">${shortDetails}
-        <span class="hidden">${details.wTeaser}</span> 
-        <button type="button" class="all-details">See more</button>
-        <button type="button" class="hide-all hidden">Hide details</button></p>`
+        return `<p class="details">${shortDetails}<span class="hidden">${details.wTeaser}</span> <button type="button" class="all-details">See more</button><button type="button" class="hide-all hidden">Hide details</button></p>`
     }else{
         return `<p>No information found in the database.</p>`
     }
-    
-    // <button type="button" class="show-details">Show details</button>
-    // <button type="button" class="hide-details hidden">Hide details</button>`
 }
 
+//This function toggles music detail length, if user would like to see all of the information or a shortened version
 $(function showAllDetails(){
     $('body').on("click", ".all-details", function(event){
         event.preventDefault();
@@ -147,6 +147,7 @@ $(function showAllDetails(){
     });
 });
 
+//This function toggles the full detail for a music result
 $(function hideAllDetails(){
     $('body').on("click", ".hide-all", function(event){
         event.preventDefault();
@@ -157,6 +158,7 @@ $(function hideAllDetails(){
     });
 });
 
+//This function allows the user to click a button show the sample video.
 $(function viewVideo(){
     $('body').on("click", ".view-video", function(event){
         event.preventDefault();
@@ -166,6 +168,7 @@ $(function viewVideo(){
     });
 })
 
+//This function allows the user to click a button hide the sample video.
 $(function hideVideo(){
     $('body').on("click", ".hide-video", function(event){
         event.preventDefault();
@@ -175,18 +178,12 @@ $(function hideVideo(){
     });
 })
 
+//This function alerts the user when no results are found for the search.
 function noResults(){
-   $('#result-list').append(`<p class="no-results">There were no results returned from this search.<br>
-   Is it spelled correctly?<br>
-   Is it in the right category?</p>`)
+   $('#result-list').append(`<p class="no-results">There were no results returned from this search.<br>Is it spelled correctly?<br>Is it in the right category?</p>`)
 }
 
-function displayResults(responseJson, maxResults){
-    // console.log(responseJson.data);
-    let data = responseJson.data;
-    $('#results').removeClass('hidden');
-};
-
+//This function makes the correct values for the form are being searched.
 function watchForm() {
     const favorites = {};
 
@@ -198,6 +195,7 @@ function watchForm() {
     });
 }
 
+//This function shows and hides the favorites list.
 $(function showFavorites(){
     $('.fav-recs').on('click', '.favorite-recs', function(event){
         event.preventDefault();
@@ -211,8 +209,7 @@ $(function showFavorites(){
     })
 });
 
-
-
+//This function allows favorites to be removed from the favorite list.
 $(function removeFavorites(){
     $('#favorites').on('click', '.remove-favorite', function(event){
         event.preventDefault();
@@ -225,6 +222,8 @@ $(function removeFavorites(){
     });
 })
 
+//This function allows the user to add favorites to the favorite list.
+//Alerts the user if favorited item is already favorited
 $(function addToFavorites(){
     $('#result-list').on("click", ".favorite", function(event){
         event.preventDefault();
@@ -243,6 +242,7 @@ $(function addToFavorites(){
     });
 });
 
+//This function sets the button to share
 $(function shareFavorites(){
     $('.fav-recs').on('click', '.share', function(event){
         event.preventDefault();
@@ -252,6 +252,8 @@ $(function shareFavorites(){
     })
 });
 
+//This function is called when the share button is called. 
+//It copies the favorited list to the user's clipboard.
 function copyToClipboard(text) {
     var $temp = $("<input>");
     $("body").append($temp);
@@ -260,12 +262,13 @@ function copyToClipboard(text) {
     $temp.remove();
 }
 
+//This function finds all favorited headers and returns them as one string
 function listOfFavorites(){
     let favorites = [];
     $("#favorites li h4").each(function() {favorites.push($(this).text())});
     return favorites.join(", ")
 }
-
+//This function checks if an object is already in favorites
 function inFavorites(newObj){
     let arrayFavorites = listOfFavorites().split(", ")   
     return arrayFavorites.some(function(name){
@@ -273,7 +276,7 @@ function inFavorites(newObj){
     });
 };
 
+
 $(function() {
-    console.log('App loaded! Waiting for submit!');
     watchForm();
 });
