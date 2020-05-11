@@ -2,7 +2,7 @@
 
 //This function formats the paramters into a query format
 function formatQueryParams(params) {
-    const queryItems = Object.keys(params).map(key => `${key}=${params[key]}`)
+    const queryItems = Object.keys(params).map(key => `${key}=${params[key]}`);
     return queryItems.join('&');
 }
 
@@ -10,7 +10,7 @@ function formatQueryParams(params) {
 function searchByQuery(query, category, maxResults=10){
     const url = `https://tastedive.com/api/similar?`;
     const joinedQuery = query.split(" ").join("+");
-    const api_key = '366850-Jonathan-5AL0N426'
+    const api_key = '366850-Jonathan-5AL0N426';
     const params = {
         k: api_key,
         q: joinedQuery,
@@ -48,7 +48,7 @@ function printResults(data, maxResults, category){
 async function addResults(searchList, maxResults, category){
     for(let i = 0; i < maxResults; i++){
         let itemToPrint = searchList[i];
-        let detailsList = " "
+        let detailsList = " ";
 
         if(itemToPrint.Type === category){
 
@@ -87,9 +87,9 @@ function getVideo(videoUrl){
             show: "Trailer"
         }
 
-        return `<iframe class="video hidden" src="${videoUrl.yUrl}" allow="fullscreen"></iframe><button type="button" class="view-video">Show ${typesOfVideo[type]}</button><button type="button" class="hide-video hidden">Hide video</button>`
+        return `<iframe class="video hidden" src="${videoUrl.yUrl}" allow="fullscreen"></iframe><button type="button" class="view-video">Show ${typesOfVideo[type]}</button><button type="button" class="hide-video hidden">Hide video</button>`;
     } else{
-        return `<p></p>`
+        return `<p></p>`;
     }
     
 }
@@ -98,7 +98,7 @@ function getVideo(videoUrl){
 async function movieInfo(movieName){
     const url = `https://www.omdbapi.com/?`;
     const joinedQuery = movieName.split(" ").join("+");
-    const api_key = '36dccbe4'
+    const api_key = '36dccbe4';
     const params = {
         t: joinedQuery,
         apikey: api_key        
@@ -111,7 +111,7 @@ async function movieInfo(movieName){
 
     let details = await fetch(fetchUrl, )
         .then(response => {return response.json()})
-        .catch(err => console.log('Something went wrong'))
+        .catch(err => console.log('Something went wrong'));
 
     let posterUrl = details.Poster;
     let plot = details.Plot;
@@ -130,9 +130,9 @@ function detailedInfo(details){
     const shortDetails = details.wTeaser.slice(0,300);
 
     if(shortDetails){
-        return `<p class="details">${shortDetails}<span class="hidden">${details.wTeaser}</span> <button type="button" class="all-details">See more</button><button type="button" class="hide-all hidden">Hide details</button></p>`
+        return `<p class="details">${shortDetails}<span class="hidden">${details.wTeaser}</span> <button type="button" class="all-details">See more</button><button type="button" class="hide-all hidden">Hide details</button></p>`;
     }else{
-        return `<p>No information found in the database.</p>`
+        return `<p>No information found in the database.</p>`;
     }
 }
 
@@ -180,7 +180,7 @@ $(function hideVideo(){
 
 //This function alerts the user when no results are found for the search.
 function noResults(){
-   $('#result-list').append(`<p class="no-results">There were no results returned from this search.<br>Is it spelled correctly?<br>Is it in the right category?</p>`)
+   $('#result-list').append(`<p class="no-results">There were no results returned from this search.<br>Is it spelled correctly?<br>Is it in the right category?</p>`);
 }
 
 //This function makes the correct values for the form are being searched.
@@ -195,19 +195,39 @@ function watchForm() {
     });
 }
 
-//This function shows and hides the favorites list.
+//This function shows the favorites list.
 $(function showFavorites(){
     $('.fav-recs').on('click', '.favorite-recs', function(event){
         event.preventDefault();
         if($('.favorites-content').children().length != 0){
-            $(this).next().toggleClass('hidden');
+            $(this).toggleClass('hidden');
+            $('.return-search').toggleClass('hidden');
+            $('#favorites').toggleClass('hidden');
             $('#search-container').toggleClass('hidden');
-            $(this).next().next().toggleClass('hidden');
+            $('.share').toggleClass('hidden');
         } else {
-            window.alert("There are no favorited items!");
+            $('.no-favorites').animate({opacity: '100%'});
+            $('.no-favorites').css('display', 'inline');
+            $('.no-favorites').fadeOut(2000);
         }
-    })
+    });
+})
+
+//This function returns to the search list
+$(function returnToSearch(){
+    $('.fav-recs').on('click', '.return-search', function(event){
+        event.preventDefault();
+        $('.favorite-recs').toggleClass('hidden');
+        $(this).toggleClass('hidden');
+        $('#favorites').toggleClass('hidden');
+        $('.share').toggleClass('hidden');
+        $('#search-container').toggleClass('hidden');
+        $('.copy-message').removeClass('hide').removeClass('visible').addClass('hide');
+    });
 });
+
+
+
 
 //This function allows favorites to be removed from the favorite list.
 $(function removeFavorites(){
@@ -218,9 +238,12 @@ $(function removeFavorites(){
             $('#favorites').toggleClass('hidden');
             $('#search-container').toggleClass('hidden');
             $('.share').toggleClass('hidden');
+            $('.favorite-recs').toggleClass('hidden');
+            $('.return-search').toggleClass('hidden');
+            $('.copy-message').removeClass('hide').removeClass('visible').addClass('hide');
         }
     });
-})
+});
 
 //This function allows the user to add favorites to the favorite list.
 //Alerts the user if favorited item is already favorited
@@ -236,7 +259,9 @@ $(function addToFavorites(){
             $('#favorites .favorite').remove();
             $("#favorites li").last().append(`<button type="button" class="remove-favorite">Remove Favorite</button>`);
         } else{
-            alert('You have favorited this already');
+            $('.in-favorites').animate({opacity: '100%'});
+            $('.in-favorites').css('display', 'inline');
+            $('.in-favorites').fadeOut(2000);
         }
         
     });
@@ -244,11 +269,11 @@ $(function addToFavorites(){
 
 //This function sets the button to share
 $(function shareFavorites(){
-    $('.fav-recs').on('click', '.share', function(event){
+    $('nav').on('click', '.share', function(event){
         event.preventDefault();
         let favToShare = listOfFavorites();
         copyToClipboard(favToShare);
-        alert('Copied favorites to clipboard!');
+        $('.copy-message').toggleClass('visible').toggleClass('hide')
     })
 });
 
@@ -266,7 +291,7 @@ function copyToClipboard(text) {
 function listOfFavorites(){
     let favorites = [];
     $("#favorites li h4").each(function() {favorites.push($(this).text())});
-    return favorites.join(", ")
+    return favorites.join(", ");
 }
 //This function checks if an object is already in favorites
 function inFavorites(newObj){

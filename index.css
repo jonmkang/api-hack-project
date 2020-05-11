@@ -22,11 +22,15 @@ footer{
     width: 100%;
 }
 
+.no-results{
+    opacity: 0;
+}
+
 nav{
     margin: 0;
     padding: 10px;
     background-color: #EAE7DC;
-    color: #E85A4F;
+    color: black;
     position: top;
     top: 0;
 }
@@ -40,7 +44,7 @@ select{
     margin: 10px;
 }
 
-.favorite-recs{
+.fav-recs>button{
     margin: 5px;
     padding: 10px;
     background-color: #D8C3A5;
@@ -78,15 +82,26 @@ input{
 }
 
 .container {
-    margin-top: 2rem;
+    padding-top: 2rem;
     min-height: 100vh;
-    color: #E85A4F;
+    color: rgb(175, 31, 21);
     width: 100%;
 }
   
 .hidden {
     display: none;
 } 
+
+.visible {
+    visibility: visible;
+    opacity: 1;
+    transition: opacity 2s linear;
+}
+
+.hide {
+    visibility: hidden;
+    opacity: 0;
+}
 
 .container h1{
     font-size: 28px;
@@ -207,11 +222,13 @@ button:hover, input {
         font-size: 18px;
     }
 
-    .favorite-recs{
+    .fav-recs>button{
         position: absolute;
         right: 0;
         font-size: 18px;
     }
+
+
 
    .favorites-content{
        padding-top: 2.5rem;
@@ -238,7 +255,7 @@ button:hover, input {
         margin: 10px;
     }
 
-    p{  
+    li p{  
         margin: 0 auto;
         font-size: 20px;
         line-height: 22px;

@@ -16,14 +16,21 @@
         <h1>Jonathan's Entertainment Hack</h1>
         <div class="fav-recs">
             <button type="button" class="favorite-recs">My Favorite Recs</button>
-            <ul id="favorites" class="favorites-content hidden">
+            <button type="button" class="return-search hidden">Return to Search</button>
+        </div>
+        <ul id="favorites" class="favorites-content hidden">
             
 
-            </ul>
+        </ul>
+        <div class="share-buttons">
             <button type="button" class="share hidden">Share Favorites</button>
+            <p class="copy-message hide">Copied to clipboard</p>
         </div>
+        
     </nav>
     <div id="search-container" class="container">
+        <p class="in-favorites hidden">This is already favorited!</p>
+        <p class="no-favorites hidden">No favorites yet!</p>
         <h1>Broaden your horizons!</h1>
         <h2>Find new music, new shows, and movies to binge watch</h2>
         <form>
@@ -33,7 +40,7 @@
                 <option value="movie">Movie</option>
                 <option value="show">Show</option>
             </select><br>
-            <input type="text" id="item-to-search" placeholder="ACDC, Finding Nemo, etc" required>
+            <input type="text" id="item-to-search" placeholder="ACDC, Finding Nemo, etc" aria-label="Search Item" required>
             <input id="search" type="submit" value="Search">
         </form>
         <section id="results" class="results">
