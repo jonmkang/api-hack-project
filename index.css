@@ -83,7 +83,7 @@ input{
 
 .container {
     padding-top: 2rem;
-    min-height: 100vh;
+    min-height: 85vh;
     color: rgb(175, 31, 21);
     width: 100%;
 }
